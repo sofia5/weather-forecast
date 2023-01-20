@@ -15,52 +15,67 @@ const WeatherForecast = () => {
   const [meanTemp, setMeanTemp] = useState<number>();
 
   useEffect(() => {
-    setCity(weather?.city.name);
-    setWeatherEntries(weather?.list ?? []);
-
-    if (weatherEntries.length > 0) {
-      const setMedian = () => {
-        const temps = weatherEntries.map((we) => we.main.temp).sort();
-        let medianTemp;
-        if (temps.length % 2 === 0) {
-          const temp1 = temps.at(weatherEntries.length / 2 - 1);
-          const temp2 = temps.at(weatherEntries.length / 2);
-
-          if (!temp1 || !temp2) {
-            throw new Error("temperatures should exist");
-          }
-
-          medianTemp = (temp1 + temp2) / 2;
-        } else {
-          medianTemp = temps.at((weatherEntries.length + 1) / 2 - 1);
-        }
-
-        if (!medianTemp) {
-          throw new Error("median number should be defined");
-        }
-
-        setMedianTemp(+medianTemp.toFixed(2));
-      };
-
-      const setMean = () => {
-        let temp = 0;
-        weatherEntries.forEach((we) => {
-          temp += we.main.temp;
-        });
-
-        setMeanTemp(+(temp / weatherEntries.length).toFixed(2));
-      };
-
-      setMaxTemp(
-        +Math.max(...weatherEntries.map((we) => we.main.temp_max)).toFixed(2)
-      );
-      setMinTemp(
-        +Math.min(...weatherEntries.map((we) => we.main.temp_min)).toFixed(2)
-      );
-      setMedian();
-      setMean();
+    if (!weather) {
+      return;
     }
-  }, [weather, weatherEntries]);
+
+    setCity(weather.city.name);
+
+    const fourDaysFromNow = new Date();
+    fourDaysFromNow.setDate(fourDaysFromNow.getDate() + 4);
+    const entries = weather.list.filter(
+      (w) => new Date(w.dt * 1000) <= fourDaysFromNow
+    );
+
+    setWeatherEntries(entries ?? []);
+  }, [weather]);
+
+  useEffect(() => {
+    if (weatherEntries.length === 0) {
+      return;
+    }
+
+    const setMedian = () => {
+      const temps = weatherEntries.map((we) => we.main.temp).sort();
+      let medianTemp;
+      if (temps.length % 2 === 0) {
+        const temp1 = temps.at(weatherEntries.length / 2 - 1);
+        const temp2 = temps.at(weatherEntries.length / 2);
+
+        if (!temp1 || !temp2) {
+          throw new Error("temperatures should exist");
+        }
+
+        medianTemp = (temp1 + temp2) / 2;
+      } else {
+        medianTemp = temps.at((weatherEntries.length + 1) / 2 - 1);
+      }
+
+      if (!medianTemp) {
+        throw new Error("median number should be defined");
+      }
+
+      setMedianTemp(+medianTemp.toFixed(2));
+    };
+
+    const setMean = () => {
+      let temp = 0;
+      weatherEntries.forEach((we) => {
+        temp += we.main.temp;
+      });
+
+      setMeanTemp(+(temp / weatherEntries.length).toFixed(2));
+    };
+
+    setMaxTemp(
+      +Math.max(...weatherEntries.map((we) => we.main.temp_max)).toFixed(2)
+    );
+    setMinTemp(
+      +Math.min(...weatherEntries.map((we) => we.main.temp_min)).toFixed(2)
+    );
+    setMedian();
+    setMean();
+  }, [weatherEntries]);
 
   return (
     <>

@@ -30,7 +30,6 @@ const TemperatureGraph = ({
         titleTextStyle: {
           color: "white",
         },
-        // format: "d MMM",
         gridlines: {
           color: "none",
           units: {

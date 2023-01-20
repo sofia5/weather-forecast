@@ -2,6 +2,21 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and uses the [Open Weather API](https://openweathermap.org/api).
 
+## Comments
+
+- It's changing name between Gothenburg and Nordstaden (which probably share the entered coordinates).
+- The data is between now and 4 days ahead
+
+## Improvements
+
+- It would be nice to be able to enter a city name / coordinates to show other locations as well
+- Maybe more lines (min, max) could be added to the graph to improve the view
+- It would've been nice to show what the weather is like (sunny, cloudy) - maybe in a view of "current weather" or adding the info to the chart
+- Caching the data (maybe 3h, until a new time enter appears)
+- More tests could be added
+
+Note: React is a framework I'm learning, and thus, it's probably possible to optimize things like how the data is fetched.
+
 ## Available Scripts
 
 In the project directory, you can run:

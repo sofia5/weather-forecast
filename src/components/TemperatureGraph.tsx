@@ -30,9 +30,17 @@ const TemperatureGraph = ({
         titleTextStyle: {
           color: "white",
         },
-        format: "d MMM",
+        // format: "d MMM",
         gridlines: {
           color: "none",
+          units: {
+            days: { format: "d MMM" },
+          },
+        },
+        minorGridlines: {
+          units: {
+            hours: { format: "" },
+          },
         },
       },
       vAxis: {

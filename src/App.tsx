@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <div className="main-content-wrapper container">
+      <div className="container-fluid">
         <Routes>
           <Route path="/" element={<WeatherForecast />} />
           <Route path="*" element={<NotFound />} />

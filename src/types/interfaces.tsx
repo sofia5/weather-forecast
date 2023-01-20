@@ -10,6 +10,7 @@ export interface Weather {
 }
 
 export interface WeatherEntry {
+  dt: number;
   main: {
     temp: number;
     temp_min: number;
